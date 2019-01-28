@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Fauntleroy/ring-my-bell-client#readme",
   "dependencies": {
-    "pi-gpio": "0.0.8"
+    "firebase": "^5.8.1"
   }
 }

@@ -1,15 +1,16 @@
-const gpio = require('pi-gpio');
+const { exec } = require('child_process');
 
-const PIN = 16;
+const firebase = require('firebase');
 
-gpio.open(PIN, 'output', function (error) {
-  if (error) {
-    console.log('Error:', error);
-  }
+const firebaseConfig = require('./firebase-config.json');
 
-  gpio.write(PIN, 1, function () {
-    setTimeout(function () {
-      gpio.close(PIN);
-    }, 10 * 1000);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseDatabase = firebase.database();
+const ringRef = firebaseDatabase.ref('ring');
+
+ringRef.on('value', function () {
+  exec('python turn-motor.py', (error) => {
+    console.log('error', error);
   });
+  console.log('ring bell command here');
 });
